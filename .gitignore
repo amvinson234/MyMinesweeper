@@ -7,6 +7,11 @@
 *.o
 *.obj
 
+#ide project files
+*.cbp
+*.depend
+*.layout
+
 # Precompiled Headers
 *.gch
 *.pch
@@ -30,3 +35,4 @@
 *.exe
 *.out
 *.app
+MyMinesweeper
