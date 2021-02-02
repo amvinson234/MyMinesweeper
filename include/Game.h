@@ -4,6 +4,7 @@
 #include <SFML/Graphics.hpp>
 #include "Board.h"
 #include "SplashScreen.h"
+#include <iostream>
 
 
 class Game
