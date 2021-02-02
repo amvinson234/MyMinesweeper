@@ -6,6 +6,7 @@
 #include "SplashScreen.h"
 #include <iostream>
 
+//class Board;
 
 class Game
 {
@@ -27,6 +28,8 @@ class Game
         static void show_menu();
         static void show_options();
         static void show_board();
+
+        static Board game_board;
 
         enum game_state{Uninitialized, ShowingSplash, Paused, ShowingMenu, ShowingOptions, Playing, Exiting};
 

@@ -27,20 +27,29 @@ class Tile
         void reveal();
         void flag();
         void unflag();
+        void change_flag();
+        void question();
+        void unquestion();
+        void change_question();
         void place_bomb();
+        void add_adj_bomb();
 
         //graphics
         sf::RectangleShape tile_shape;
+        sf::Text text_status;
 
     private:
         bool bomb;
         bool revealed;
         bool flagged;
+        bool questioned;
         int row_pos;
         int col_pos;
         int width;
         int adj_bombs;
         void find_adj_bombs(); //calculates number of adjacent bombs
+
+        sf::Font font;
 
 
         std::vector<Tile*> adj_tiles;

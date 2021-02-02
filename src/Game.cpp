@@ -56,13 +56,13 @@ void Game::show_splash_screen()
     splash_screen.show(main_window);
 
     _game_state = Game::Playing;
-
+    //game_board
 }
 
 void Game::show_board()
 {
     main_window.clear(sf::Color(0,100,200));
-    Board game_board;
+    //Board game_board;
     game_board.draw(main_window);
     main_window.display();
 
@@ -70,3 +70,4 @@ void Game::show_board()
 
 Game::game_state Game::_game_state = Uninitialized;
 sf::RenderWindow Game::main_window;
+Board Game::game_board;
