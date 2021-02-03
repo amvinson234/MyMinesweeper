@@ -26,7 +26,6 @@ Tile::Tile(int rpos, int cpos, bool place_bomb, int pixel_size)
     int thickness = width / 10;
     tile_shape.setOutlineThickness(thickness);
     tile_shape.setOutlineColor(sf::Color(50,50,50));
-    //tile_shape.setOrigin(50.,50.);
 
     tile_shape.setPosition(margin + (width + thickness*2.0) * col_pos, margin + (width + thickness*2.0) * row_pos);
 

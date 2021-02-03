@@ -30,6 +30,7 @@ void Game::game_loop(sf::Clock &clock)
 {
     sf::Event current_event;
     main_window.pollEvent(current_event);
+    if(current_event.type == sf::Event::EventType::Closed) _game_state = Game::Exiting;
     double elapsed_time = clock.getElapsedTime().asSeconds();
     clock.restart();
 
@@ -43,20 +44,16 @@ void Game::game_loop(sf::Clock &clock)
         case Game::Playing:
         {
             show_board();
+
             break;
         }
     }
-
-
 }
 
 void Game::show_splash_screen()
 {
     SplashScreen splash_screen;
     splash_screen.show(main_window);
-
-    _game_state = Game::Playing;
-    //game_board
 }
 
 void Game::show_board()
@@ -64,6 +61,7 @@ void Game::show_board()
     main_window.clear(sf::Color(0,100,200));
     //Board game_board;
     game_board.draw(main_window);
+    game_board.update(main_window);
     main_window.display();
 
 }

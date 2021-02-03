@@ -14,12 +14,13 @@ class Board
 
         virtual ~Board();
 
-        Tile* get_tile(int row, int col);
+        Tile* get_tile(int x, int y);
 
         //modifiers
         void reveal_all(); //loops through tiles on board and changes reveal status
 
         void draw(sf::RenderWindow &rw);
+        void update(sf::RenderWindow &rw);
 
     private:
         std::vector<Tile*> tiles; //flattened list of tiles on the board

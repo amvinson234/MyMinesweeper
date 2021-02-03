@@ -4,6 +4,7 @@
 #include <random>
 #include <unordered_map>
 #include <stdlib.h>
+#include <SFML/Window/Mouse.hpp>
 
 Board::Board()
 {
@@ -95,10 +96,20 @@ void Board::reveal_all()
 }
 
 
-Tile* Board::get_tile(int row, int col)
+Tile* Board::get_tile(int x, int y)
 {
-    int index = row * N_cols + col;
-    return tiles[index];
+    //int index = row * N_cols + col;
+    //return tiles[index];
+    for(int index = 0; index < tiles.size(); index++)
+    {
+        sf::FloatRect shape = tiles[index]->tile_shape.getGlobalBounds();
+        int left_bound = shape.left;
+        int right_bound = shape.left + shape.width;
+        int top_bound = shape.top;
+        int bottom_bound = shape.top + shape.height;
+        if(x < right_bound && x > left_bound && y < bottom_bound && y > top_bound) return tiles[index];
+    }
+    return NULL;
 }
 
 void Board::draw(sf::RenderWindow &rw)
@@ -106,10 +117,43 @@ void Board::draw(sf::RenderWindow &rw)
     rw.clear(sf::Color(0,0,100.));
     for(int i = 0; i < tiles.size(); i++)
     {
-        tiles[i]->reveal();
         rw.draw(tiles[i]->tile_shape);
         rw.draw(tiles[i]->text_status);
     }
+}
+
+void Board::update(sf::RenderWindow &rw)
+{
+    sf::Event event;
+    if(sf::Mouse::isButtonPressed(sf::Mouse::Left))
+    {
+        while(1)
+        while(rw.pollEvent(event))
+        {
+           // rw.pollEvent(event);
+            if(event.type == sf::Event::EventType::Closed)
+            {
+                Game::_game_state = Game::Exiting;
+                return;
+            }
+            if(event.type == sf::Event::EventType::MouseButtonReleased)
+            {
+                ;
+                int x_pos = sf::Mouse::getPosition(rw).x;
+                int y_pos = sf::Mouse::getPosition(rw).y;
+
+                //find tile and reveal it
+                if(get_tile(x_pos,y_pos) != NULL)
+                {
+                    get_tile(x_pos,y_pos)->reveal();
+                }
+
+                return;
+            }
+        }
+    }
+
+
 }
 
 int Board::index(int row, int col)

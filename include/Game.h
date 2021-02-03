@@ -17,6 +17,9 @@ class Game
         const static int SCREEN_WIDTH = 1024;
         const static int SCREEN_HEIGHT = 768;
 
+        enum game_state{Uninitialized, ShowingSplash, Paused, ShowingMenu, ShowingOptions, Playing, Exiting};
+        static game_state _game_state;
+
 
 
     private:
@@ -31,9 +34,9 @@ class Game
 
         static Board game_board;
 
-        enum game_state{Uninitialized, ShowingSplash, Paused, ShowingMenu, ShowingOptions, Playing, Exiting};
 
-        static game_state _game_state;
+
+
 
         static sf::RenderWindow main_window;
         static double total_elapsed_time;

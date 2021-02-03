@@ -34,6 +34,11 @@ void SplashScreen::show(sf::RenderWindow& renderWindow)
         {
             if(event.type == sf::Event::EventType::KeyPressed || event.type == sf::Event::EventType::MouseButtonPressed || event.type == sf::Event::EventType::Closed)
             {
+                if(event.type == sf::Event::EventType::Closed)
+                {
+                    Game::_game_state = Game::Exiting;
+                }
+                else Game::_game_state = Game::Playing;
                 return;
             }
         }
