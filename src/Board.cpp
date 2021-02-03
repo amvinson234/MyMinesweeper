@@ -125,12 +125,13 @@ void Board::draw(sf::RenderWindow &rw)
 void Board::update(sf::RenderWindow &rw)
 {
     sf::Event event;
-    while(rw.pollEvent(event))
-    {
+
+   // while(rw.pollEvent(event))
+    //{
         if(sf::Keyboard::isKeyPressed(sf::Keyboard::LShift) && sf::Mouse::isButtonPressed(sf::Mouse::Left))
         {
-            //while(1)
-            //while(rw.pollEvent(event))
+            while(1)
+            while(rw.pollEvent(event))
             {
                 if(event.type == sf::Event::EventType::MouseButtonReleased)
                 {
@@ -148,8 +149,8 @@ void Board::update(sf::RenderWindow &rw)
         }
         else if(sf::Mouse::isButtonPressed(sf::Mouse::Left) && !sf::Keyboard::isKeyPressed(sf::Keyboard::LShift))
         {
-            //while(1)
-            //while(rw.pollEvent(event))
+            while(1)
+            while(rw.pollEvent(event))
             {
             //    rw.pollEvent(event);
                 if(event.type == sf::Event::EventType::Closed)
@@ -173,7 +174,7 @@ void Board::update(sf::RenderWindow &rw)
                 }
             }
         }
-    }
+
 
 
 }
