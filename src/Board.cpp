@@ -117,7 +117,6 @@ void Board::draw(sf::RenderWindow &rw)
     rw.clear(sf::Color(0,0,100.));
     for(int i = 0; i < tiles.size(); i++)
     {
-        //tiles[i]->reveal();
         rw.draw(tiles[i]->tile_shape);
         rw.draw(tiles[i]->text_status);
     }
@@ -126,30 +125,52 @@ void Board::draw(sf::RenderWindow &rw)
 void Board::update(sf::RenderWindow &rw)
 {
     sf::Event event;
-    if(sf::Mouse::isButtonPressed(sf::Mouse::Left))
+    while(rw.pollEvent(event))
     {
-        while(1)
-        while(rw.pollEvent(event))
+        if(sf::Keyboard::isKeyPressed(sf::Keyboard::LShift) && sf::Mouse::isButtonPressed(sf::Mouse::Left))
         {
-        //    rw.pollEvent(event);
-            if(event.type == sf::Event::EventType::Closed)
+            //while(1)
+            //while(rw.pollEvent(event))
             {
-                Game::_game_state = Game::Exiting;
-                return;
-            }
-            if(event.type == sf::Event::EventType::MouseButtonReleased)
-            {
-
-                int x_pos = sf::Mouse::getPosition(rw).x;
-                int y_pos = sf::Mouse::getPosition(rw).y;
-
-                //find tile and reveal it
-                if(get_tile(x_pos,y_pos) != NULL)
+                if(event.type == sf::Event::EventType::MouseButtonReleased)
                 {
-                    get_tile(x_pos,y_pos)->reveal();
-                }
+                    int x_pos = sf::Mouse::getPosition(rw).x;
+                    int y_pos = sf::Mouse::getPosition(rw).y;
 
-                return;
+                    //find tile and reveal it
+                    if(get_tile(x_pos,y_pos) != NULL)
+                    {
+                        get_tile(x_pos,y_pos)->change_flag();
+                    }
+                    return;
+                }
+            }
+        }
+        else if(sf::Mouse::isButtonPressed(sf::Mouse::Left) && !sf::Keyboard::isKeyPressed(sf::Keyboard::LShift))
+        {
+            //while(1)
+            //while(rw.pollEvent(event))
+            {
+            //    rw.pollEvent(event);
+                if(event.type == sf::Event::EventType::Closed)
+                {
+                    Game::_game_state = Game::Exiting;
+                    return;
+                }
+                if(event.type == sf::Event::EventType::MouseButtonReleased)
+                {
+
+                    int x_pos = sf::Mouse::getPosition(rw).x;
+                    int y_pos = sf::Mouse::getPosition(rw).y;
+
+                    //find tile and reveal it
+                    if(get_tile(x_pos,y_pos) != NULL)
+                    {
+                        get_tile(x_pos,y_pos)->reveal();
+                    }
+
+                    return;
+                }
             }
         }
     }

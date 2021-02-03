@@ -54,6 +54,18 @@ void Game::show_splash_screen()
 {
     SplashScreen splash_screen;
     splash_screen.show(main_window);
+
+    //if starting game, wait a little before game starts reading game inputs
+    if(Game::Playing)
+    {
+        main_window.clear(sf::Color(0,100,200));
+        game_board.draw(main_window);
+        main_window.display();
+        sf::Clock clock;
+        while(clock.getElapsedTime().asSeconds() < 1)
+        {
+        }
+    }
 }
 
 void Game::show_board()

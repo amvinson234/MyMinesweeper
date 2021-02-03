@@ -54,11 +54,13 @@ void Tile::reveal()
 }
 void Tile::flag()
 {
+    if(revealed) return;
     text_status.setString("F");
     flagged = true;
 }
 void Tile::unflag()
 {
+    if(revealed) return;
     text_status.setString("");
     flagged = false;
 }
@@ -69,11 +71,13 @@ void Tile::change_flag()
 }
 void Tile::question()
 {
+    if(revealed) return;
     text_status.setString("?");
     questioned = true;
 }
 void Tile::unquestion()
 {
+    if(revealed) return;
     text_status.setString("");
     questioned = false;
 }
