@@ -21,6 +21,8 @@ class Tile
         bool reveal_status();
         bool flag_status();
         int get_adj_bombs(); //returns adj_bombs
+        int row_pos;
+        int col_pos;
 
 
         //modifiers
@@ -43,8 +45,6 @@ class Tile
         bool revealed;
         bool flagged;
         bool questioned;
-        int row_pos;
-        int col_pos;
         int width;
         int adj_bombs;
         void find_adj_bombs(); //calculates number of adjacent bombs

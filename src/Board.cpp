@@ -64,7 +64,26 @@ void Board::populate()
 
 void Board::determine_adjacencies()
 {
+    for(int i = 0; i < N_rows*N_cols; i++)
+    {
+        int row = tiles[i]->row_pos;
+        int col = tiles[i]->col_pos;
 
+        int row_above = row - 1;
+        int row_below = row + 1;
+        int col_right = col + 1;
+        int col_left = col - 1;
+
+        if(index(row_above,col_left) >= 0 && tiles[index(row_above,col_left)]->bomb_present()) tiles[i]->add_adj_bomb();
+        if(index(row_above,col) >= 0 && tiles[index(row_above,col)]->bomb_present()) tiles[i]->add_adj_bomb();
+        if(index(row_above,col_right) >= 0 && tiles[index(row_above,col_right)]->bomb_present()) tiles[i]->add_adj_bomb();
+        if(index(row,col_left) >= 0 && tiles[index(row,col_left)]->bomb_present()) tiles[i]->add_adj_bomb();
+        if(index(row,col_right) >= 0 && tiles[index(row,col_right)]->bomb_present()) tiles[i]->add_adj_bomb();
+        if(index(row_below,col_left) >= 0 && tiles[index(row_below,col_left)]->bomb_present()) tiles[i]->add_adj_bomb();
+        if(index(row_below,col) >= 0 && tiles[index(row_below,col)]->bomb_present()) tiles[i]->add_adj_bomb();
+        if(index(row_below,col_right) >= 0 && tiles[index(row_below,col_right)]->bomb_present()) tiles[i]->add_adj_bomb();
+
+    }
 }
 
 void Board::reveal_all()
@@ -87,26 +106,14 @@ void Board::draw(sf::RenderWindow &rw)
     rw.clear(sf::Color(0,0,100.));
     for(int i = 0; i < tiles.size(); i++)
     {
-      //  std::cerr << tiles[i]->tile_shape.getPosition().x << std::endl;
         tiles[i]->reveal();
         rw.draw(tiles[i]->tile_shape);
         rw.draw(tiles[i]->text_status);
     }
-    /*
-    int margin = Game::SCREEN_HEIGHT / 2.;
-    int width = (Game::SCREEN_WIDTH-margin)/N_rows;
-    sf::RectangleShape tile_shape(sf::Vector2f(width, width));
-    tile_shape.setFillColor(sf::Color(100,100,100));
-    int thickness = width / 10;
-    tile_shape.setOutlineThickness(thickness);
-    tile_shape.setOutlineColor(sf::Color(50,50,50));
-    tile_shape.setOrigin(50.,50.);
-    tile_shape.setPosition(Game::SCREEN_WIDTH/2.,Game::SCREEN_HEIGHT/2.0);
-    rw.draw(tile_shape);
-    tile_shape.setPosition(Game::SCREEN_WIDTH/2. + width + 2*thickness, Game::SCREEN_HEIGHT/2.0);
-    rw.draw(tile_shape);
-    */
+}
 
-
-
+int Board::index(int row, int col)
+{
+    if(row < 0 || row > N_rows - 1 || col < 0 || col > N_cols - 1) return -1;
+    else return row*N_cols + col;
 }

@@ -28,6 +28,7 @@ class Board
         int N_cols;
         int N_rows;
         int N_bombs;
+        int index(int row, int col);
 
 
 };
