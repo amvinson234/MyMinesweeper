@@ -61,8 +61,8 @@ void Game::show_board()
     main_window.clear(sf::Color(0,100,200));
     //Board game_board;
     game_board.draw(main_window);
-    game_board.update(main_window);
     main_window.display();
+    game_board.update(main_window);
 
 }
 

@@ -117,6 +117,7 @@ void Board::draw(sf::RenderWindow &rw)
     rw.clear(sf::Color(0,0,100.));
     for(int i = 0; i < tiles.size(); i++)
     {
+        //tiles[i]->reveal();
         rw.draw(tiles[i]->tile_shape);
         rw.draw(tiles[i]->text_status);
     }
@@ -130,7 +131,7 @@ void Board::update(sf::RenderWindow &rw)
         while(1)
         while(rw.pollEvent(event))
         {
-           // rw.pollEvent(event);
+        //    rw.pollEvent(event);
             if(event.type == sf::Event::EventType::Closed)
             {
                 Game::_game_state = Game::Exiting;
@@ -138,7 +139,7 @@ void Board::update(sf::RenderWindow &rw)
             }
             if(event.type == sf::Event::EventType::MouseButtonReleased)
             {
-                ;
+
                 int x_pos = sf::Mouse::getPosition(rw).x;
                 int y_pos = sf::Mouse::getPosition(rw).y;
 
