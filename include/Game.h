@@ -4,6 +4,7 @@
 #include <SFML/Graphics.hpp>
 #include "Board.h"
 #include "SplashScreen.h"
+#include "ScoreBoard.h"
 #include <iostream>
 
 //class Board;
@@ -27,12 +28,13 @@ class Game
         static bool is_exiting();
         static void game_loop(sf::Clock & clock);
 
-        static void show_splash_screen();
+        static void show_splash_screen(sf::Event &event);
         static void show_menu();
         static void show_options();
-        static void show_board();
+        static void show_board(sf::Event &event);
 
         static Board game_board;
+        static ScoreBoard score_board;
 
 
 

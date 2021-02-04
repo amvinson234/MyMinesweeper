@@ -14,13 +14,16 @@ class Board
 
         virtual ~Board();
 
-        Tile* get_tile(int x, int y);
 
         //modifiers
         void reveal_all(); //loops through tiles on board and changes reveal status
 
+        //accessors
+        int bombs_left();
+        Tile* get_tile(int x, int y);
+
         void draw(sf::RenderWindow &rw);
-        void update(sf::RenderWindow &rw);
+        void update(sf::RenderWindow &rw, sf::Event &event);
 
     private:
         std::vector<Tile*> tiles; //flattened list of tiles on the board
@@ -29,6 +32,7 @@ class Board
         int N_cols;
         int N_rows;
         int N_bombs;
+        int N_bombs_left;
         int index(int row, int col);
 
 

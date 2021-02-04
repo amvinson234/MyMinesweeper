@@ -29,34 +29,36 @@ bool Game::is_exiting()
 void Game::game_loop(sf::Clock &clock)
 {
     sf::Event current_event;
-    main_window.pollEvent(current_event);
-    if(current_event.type == sf::Event::EventType::Closed) _game_state = Game::Exiting;
-    double elapsed_time = clock.getElapsedTime().asSeconds();
-    clock.restart();
-
-    switch(_game_state)
+    while(main_window.pollEvent(current_event))
     {
-        case Game::ShowingSplash:
-        {
-            show_splash_screen();
-            break;
-        }
-        case Game::Playing:
-        {
-            show_board();
+        if(current_event.type == sf::Event::EventType::Closed) _game_state = Game::Exiting;
+        double elapsed_time = clock.getElapsedTime().asSeconds();
+        clock.restart();
 
-            break;
+        switch(_game_state)
+        {
+            case Game::ShowingSplash:
+            {
+                show_splash_screen(current_event);
+                break;
+            }
+            case Game::Playing:
+            {
+                show_board(current_event);
+
+                break;
+            }
         }
     }
 }
 
-void Game::show_splash_screen()
+void Game::show_splash_screen(sf::Event &event)
 {
     SplashScreen splash_screen;
-    splash_screen.show(main_window);
+    splash_screen.show(main_window, event);
 
     //if starting game, wait a little before game starts reading game inputs
-    if(Game::Playing)
+    if(Game::_game_state == Game::Playing)
     {
         main_window.clear(sf::Color(0,100,200));
         game_board.draw(main_window);
@@ -68,16 +70,20 @@ void Game::show_splash_screen()
     }
 }
 
-void Game::show_board()
+void Game::show_board(sf::Event &event)
 {
     main_window.clear(sf::Color(0,100,200));
     //Board game_board;
+   // game_board.draw(main_window);
+   // main_window.display();
+    game_board.update(main_window, event);
     game_board.draw(main_window);
+    score_board.update(main_window, game_board, event);
     main_window.display();
-    game_board.update(main_window);
 
 }
 
 Game::game_state Game::_game_state = Uninitialized;
 sf::RenderWindow Game::main_window;
 Board Game::game_board;
+ScoreBoard Game::score_board;

@@ -47,10 +47,16 @@ Tile::~Tile()
 
 void Tile::reveal()
 {
-    if(bomb) text_status.setString("B");
+    if(bomb)
+    {
+        text_status.setString("B");
+        text_status.setFillColor(sf::Color(200,0,0));
+    }
     else text_status.setString(std::to_string(adj_bombs));
     tile_shape.setFillColor(sf::Color(200,200,200));
     revealed = true;
+    flagged = false;
+    questioned = false;
 }
 void Tile::flag()
 {

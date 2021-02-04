@@ -10,7 +10,7 @@ SplashScreen::~SplashScreen()
     //dtor
 }
 
-void SplashScreen::show(sf::RenderWindow& renderWindow)
+void SplashScreen::show(sf::RenderWindow& renderWindow, sf::Event &event)
 {
     sf::Text title;
     sf::Font font;
@@ -27,7 +27,7 @@ void SplashScreen::show(sf::RenderWindow& renderWindow)
     renderWindow.draw(title);
     renderWindow.display();
 
-    sf::Event event;
+    //sf::Event event;
     while(1)
     {
         while(renderWindow.pollEvent(event))

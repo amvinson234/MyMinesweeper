@@ -9,7 +9,7 @@ class SplashScreen
         SplashScreen();
         ~SplashScreen();
 
-        void show(sf::RenderWindow& rw);
+        void show(sf::RenderWindow& rw, sf::Event &event);
 
     private:
 };

@@ -11,6 +11,7 @@ Board::Board()
     N_cols = 10;
     N_rows = 10;
     N_bombs = 20;
+    N_bombs_left = N_bombs;
 
     populate();
     determine_adjacencies();
@@ -112,6 +113,17 @@ Tile* Board::get_tile(int x, int y)
     return NULL;
 }
 
+int Board::bombs_left()
+{
+    N_bombs_left = N_bombs;
+    for(int i = 0; i < tiles.size(); i++)
+    {
+        if(tiles[i]->flag_status()) N_bombs_left--;
+        if(tiles[i]->reveal_status() && tiles[i]->bomb_present()) N_bombs_left--;
+    }
+    return N_bombs_left;
+}
+
 void Board::draw(sf::RenderWindow &rw)
 {
     rw.clear(sf::Color(0,0,100.));
@@ -122,36 +134,39 @@ void Board::draw(sf::RenderWindow &rw)
     }
 }
 
-void Board::update(sf::RenderWindow &rw)
+void Board::update(sf::RenderWindow &rw, sf::Event &event)
 {
-    sf::Event event;
+    //sf::Event event;
 
    // while(rw.pollEvent(event))
     //{
-        if(sf::Keyboard::isKeyPressed(sf::Keyboard::LShift) && sf::Mouse::isButtonPressed(sf::Mouse::Left))
+        if(sf::Keyboard::isKeyPressed(sf::Keyboard::LShift))// && sf::Mouse::isButtonPressed(sf::Mouse::Left))
         {
-            while(1)
-            while(rw.pollEvent(event))
-            {
+            //while(1)
+            //while(rw.pollEvent(event))
+           // {
                 if(event.type == sf::Event::EventType::MouseButtonReleased)
                 {
                     int x_pos = sf::Mouse::getPosition(rw).x;
                     int y_pos = sf::Mouse::getPosition(rw).y;
 
                     //find tile and reveal it
-                    if(get_tile(x_pos,y_pos) != NULL)
+                    Tile *selected_tile = get_tile(x_pos, y_pos);
+                    if(selected_tile != NULL)
                     {
-                        get_tile(x_pos,y_pos)->change_flag();
+                        selected_tile->change_flag();
+                        //if(selected_tile->flag_status() == true && selected_tile->reveal_status() == false) N_bombs_left--;
+                        //else if(selected_tile->flag_status() == false && selected_tile->reveal_status() == false) N_bombs_left++;
                     }
                     return;
                 }
             }
-        }
-        else if(sf::Mouse::isButtonPressed(sf::Mouse::Left) && !sf::Keyboard::isKeyPressed(sf::Keyboard::LShift))
+        //}
+        else //if(sf::Mouse::isButtonPressed(sf::Mouse::Left) && !sf::Keyboard::isKeyPressed(sf::Keyboard::LShift))
         {
-            while(1)
-            while(rw.pollEvent(event))
-            {
+            //while(1)
+            //while(rw.pollEvent(event))
+            //{
             //    rw.pollEvent(event);
                 if(event.type == sf::Event::EventType::Closed)
                 {
@@ -165,14 +180,16 @@ void Board::update(sf::RenderWindow &rw)
                     int y_pos = sf::Mouse::getPosition(rw).y;
 
                     //find tile and reveal it
-                    if(get_tile(x_pos,y_pos) != NULL)
+                    Tile *selected_tile = get_tile(x_pos, y_pos);
+                    if(selected_tile != NULL)
                     {
+                        //if(selected_tile->reveal_status() == false && selected_tile->flag_status() == true) N_bombs_left++;
                         get_tile(x_pos,y_pos)->reveal();
                     }
 
                     return;
                 }
-            }
+            //}
         }
 
 
