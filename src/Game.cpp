@@ -1,4 +1,8 @@
 #include "Game.h"
+#include "Board.h"
+#include "SplashScreen.h"
+#include "ScoreBoard.h"
+#include <iostream>
 
 void Game::start()
 {
@@ -45,7 +49,18 @@ void Game::game_loop(sf::Clock &clock)
             case Game::Playing:
             {
                 show_board(current_event);
+                if(_game_state != Restarting) break;
+            }
+            case Game::Restarting:
+            {
+                main_window.clear(sf::Color(0,100,200));
+                game_board->reset();
+                game_board->draw(main_window);
+                score_board->draw(main_window);
 
+                main_window.display();
+
+                _game_state = Game::Playing;
                 break;
             }
         }
@@ -61,7 +76,11 @@ void Game::show_splash_screen(sf::Event &event)
     if(Game::_game_state == Game::Playing)
     {
         main_window.clear(sf::Color(0,100,200));
-        game_board.draw(main_window);
+        game_board = new Board();
+        game_board->draw(main_window);
+        score_board = new ScoreBoard(*game_board);
+        score_board->draw(main_window);
+
         main_window.display();
         sf::Clock clock;
         while(clock.getElapsedTime().asSeconds() < 1)
@@ -73,17 +92,17 @@ void Game::show_splash_screen(sf::Event &event)
 void Game::show_board(sf::Event &event)
 {
     main_window.clear(sf::Color(0,100,200));
-    //Board game_board;
-   // game_board.draw(main_window);
-   // main_window.display();
-    game_board.update(main_window, event);
-    game_board.draw(main_window);
-    score_board.update(main_window, game_board, event);
+
+
+    game_board->update(main_window, event);
+    game_board->draw(main_window);
+    score_board->update(main_window, *game_board, event);
+    score_board->draw(main_window);
     main_window.display();
 
 }
 
 Game::game_state Game::_game_state = Uninitialized;
 sf::RenderWindow Game::main_window;
-Board Game::game_board;
-ScoreBoard Game::score_board;
+Board *Game::game_board;
+ScoreBoard *Game::score_board;

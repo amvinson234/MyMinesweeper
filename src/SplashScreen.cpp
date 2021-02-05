@@ -27,7 +27,6 @@ void SplashScreen::show(sf::RenderWindow& renderWindow, sf::Event &event)
     renderWindow.draw(title);
     renderWindow.display();
 
-    //sf::Event event;
     while(1)
     {
         while(renderWindow.pollEvent(event))

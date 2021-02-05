@@ -99,8 +99,6 @@ void Board::reveal_all()
 
 Tile* Board::get_tile(int x, int y)
 {
-    //int index = row * N_cols + col;
-    //return tiles[index];
     for(int index = 0; index < tiles.size(); index++)
     {
         sf::FloatRect shape = tiles[index]->tile_shape.getGlobalBounds();
@@ -126,7 +124,6 @@ int Board::bombs_left()
 
 void Board::draw(sf::RenderWindow &rw)
 {
-    rw.clear(sf::Color(0,0,100.));
     for(int i = 0; i < tiles.size(); i++)
     {
         rw.draw(tiles[i]->tile_shape);
@@ -136,64 +133,58 @@ void Board::draw(sf::RenderWindow &rw)
 
 void Board::update(sf::RenderWindow &rw, sf::Event &event)
 {
-    //sf::Event event;
-
-   // while(rw.pollEvent(event))
-    //{
-        if(sf::Keyboard::isKeyPressed(sf::Keyboard::LShift))// && sf::Mouse::isButtonPressed(sf::Mouse::Left))
+    if(sf::Keyboard::isKeyPressed(sf::Keyboard::LShift))
+    {
+        if(event.type == sf::Event::EventType::MouseButtonReleased)
         {
-            //while(1)
-            //while(rw.pollEvent(event))
-           // {
-                if(event.type == sf::Event::EventType::MouseButtonReleased)
-                {
-                    int x_pos = sf::Mouse::getPosition(rw).x;
-                    int y_pos = sf::Mouse::getPosition(rw).y;
+            int x_pos = sf::Mouse::getPosition(rw).x;
+            int y_pos = sf::Mouse::getPosition(rw).y;
 
-                    //find tile and reveal it
-                    Tile *selected_tile = get_tile(x_pos, y_pos);
-                    if(selected_tile != NULL)
-                    {
-                        selected_tile->change_flag();
-                        //if(selected_tile->flag_status() == true && selected_tile->reveal_status() == false) N_bombs_left--;
-                        //else if(selected_tile->flag_status() == false && selected_tile->reveal_status() == false) N_bombs_left++;
-                    }
-                    return;
-                }
+            //find tile and reveal it
+            Tile *selected_tile = get_tile(x_pos, y_pos);
+            if(selected_tile != NULL)
+            {
+                selected_tile->change_flag();
             }
-        //}
-        else //if(sf::Mouse::isButtonPressed(sf::Mouse::Left) && !sf::Keyboard::isKeyPressed(sf::Keyboard::LShift))
+            return;
+        }
+    }
+    else
+    {
+        if(event.type == sf::Event::EventType::Closed)
         {
-            //while(1)
-            //while(rw.pollEvent(event))
-            //{
-            //    rw.pollEvent(event);
-                if(event.type == sf::Event::EventType::Closed)
-                {
-                    Game::_game_state = Game::Exiting;
-                    return;
-                }
-                if(event.type == sf::Event::EventType::MouseButtonReleased)
-                {
+            Game::_game_state = Game::Exiting;
+            return;
+        }
+        if(event.type == sf::Event::EventType::MouseButtonReleased)
+        {
 
-                    int x_pos = sf::Mouse::getPosition(rw).x;
-                    int y_pos = sf::Mouse::getPosition(rw).y;
+            int x_pos = sf::Mouse::getPosition(rw).x;
+            int y_pos = sf::Mouse::getPosition(rw).y;
 
-                    //find tile and reveal it
-                    Tile *selected_tile = get_tile(x_pos, y_pos);
-                    if(selected_tile != NULL)
-                    {
-                        //if(selected_tile->reveal_status() == false && selected_tile->flag_status() == true) N_bombs_left++;
-                        get_tile(x_pos,y_pos)->reveal();
-                    }
+            Tile *selected_tile = get_tile(x_pos, y_pos);
+            if(selected_tile != NULL)
+            {
+                get_tile(x_pos,y_pos)->reveal();
+            }
 
-                    return;
-                }
-            //}
+            return;
         }
 
+    }
+}
 
+void Board::reset()
+{
+    for(int i = 0; i < tiles.size(); i++)
+    {
+        delete tiles[i];
+    }
+    tiles.erase(tiles.begin(),tiles.end());
 
+    N_bombs_left = N_bombs;
+    populate();
+    determine_adjacencies();
 }
 
 int Board::index(int row, int col)

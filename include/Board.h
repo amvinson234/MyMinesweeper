@@ -2,7 +2,6 @@
 #define BOARD_H
 
 #include "Tile.h"
-//#include "Game.h"
 #include <vector>
 
 class Board
@@ -24,6 +23,7 @@ class Board
 
         void draw(sf::RenderWindow &rw);
         void update(sf::RenderWindow &rw, sf::Event &event);
+        void reset();
 
     private:
         std::vector<Tile*> tiles; //flattened list of tiles on the board

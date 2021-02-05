@@ -2,12 +2,11 @@
 #define GAME_H
 
 #include <SFML/Graphics.hpp>
-#include "Board.h"
-#include "SplashScreen.h"
-#include "ScoreBoard.h"
 #include <iostream>
 
-//class Board;
+class Board;
+class SplashScreen;
+class ScoreBoard;
 
 class Game
 {
@@ -18,7 +17,7 @@ class Game
         const static int SCREEN_WIDTH = 1024;
         const static int SCREEN_HEIGHT = 768;
 
-        enum game_state{Uninitialized, ShowingSplash, Paused, ShowingMenu, ShowingOptions, Playing, Exiting};
+        enum game_state{Uninitialized, ShowingSplash, Paused, ShowingMenu, ShowingOptions, Playing, Restarting, Exiting};
         static game_state _game_state;
 
 
@@ -33,11 +32,8 @@ class Game
         static void show_options();
         static void show_board(sf::Event &event);
 
-        static Board game_board;
-        static ScoreBoard score_board;
-
-
-
+        static Board *game_board;
+        static ScoreBoard *score_board;
 
 
         static sf::RenderWindow main_window;

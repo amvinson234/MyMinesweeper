@@ -2,13 +2,30 @@
 #define SCOREBOARD_H
 
 #include <SFML/Graphics.hpp>
-#include "Board.h"
+#include <string>
+#include <map>
+
+class Game;
+class Board;
 
 class ScoreBoard
 {
     public:
         ScoreBoard();
+        ScoreBoard(Board &game_board);
         virtual ~ScoreBoard();
+
+        enum action_state{};
+
+        struct Item
+        {
+            public:
+                sf::Text text;
+                int action;
+        };
+
+
+        std::map<std::string,Item> items;
 
         void update(sf::RenderWindow &rw, Board &game_board, sf::Event &event);
         void draw(sf::RenderWindow &rw);
@@ -16,12 +33,7 @@ class ScoreBoard
 
     private:
         sf::Font font;
-        sf::Text bombs_left;
-        sf::Text restart;
-        sf::Text exit;
-        sf::Text loser;
-        sf::Text winner;
-
+        Item create_item(std::string text, int x_pos, int y_pos, int action);
 
 };
 
