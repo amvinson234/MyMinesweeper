@@ -56,6 +56,7 @@ void Game::game_loop(sf::Clock &clock)
                 main_window.clear(sf::Color(0,100,200));
                 game_board->reset();
                 game_board->draw(main_window);
+                score_board->update(main_window, *game_board, current_event);
                 score_board->draw(main_window);
 
                 main_window.display();
