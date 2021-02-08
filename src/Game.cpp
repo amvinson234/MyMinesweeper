@@ -51,11 +51,30 @@ void Game::game_loop(sf::Clock &clock)
                 show_board(current_event);
                 if(_game_state != Restarting) break;
             }
+            case Game::Lost:
+            {
+                if(current_event.type == sf::Event::EventType::KeyReleased || current_event.type == sf::Event::EventType::MouseButtonReleased)
+                {
+                    _game_state = Game::Restarting;
+                }
+                else break;
+            }
+            case Game::Won:
+            {
+                if(current_event.type == sf::Event::EventType::KeyReleased || current_event.type == sf::Event::EventType::MouseButtonReleased)
+                {
+                    _game_state = Game::Restarting;
+                }
+                else break;
+            }
             case Game::Restarting:
             {
                 main_window.clear(sf::Color(0,100,200));
-                game_board->reset();
+                game_board->~Board();
+                game_board = new Board();
                 game_board->draw(main_window);
+                score_board->~ScoreBoard();
+                score_board = new ScoreBoard();
                 score_board->update(main_window, *game_board, current_event);
                 score_board->draw(main_window);
 

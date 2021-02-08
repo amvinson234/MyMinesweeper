@@ -17,7 +17,7 @@ class Game
         const static int SCREEN_WIDTH = 1024;
         const static int SCREEN_HEIGHT = 768;
 
-        enum game_state{Uninitialized, ShowingSplash, Paused, ShowingMenu, ShowingOptions, Playing, Restarting, Exiting};
+        enum game_state{Uninitialized, ShowingSplash, Paused, ShowingMenu, ShowingOptions, Playing, Lost, Won, Restarting, Exiting};
         static game_state _game_state;
 
 

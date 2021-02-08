@@ -19,6 +19,7 @@ class Board
 
         //accessors
         int bombs_left();
+        int reveal_count();
         Tile* get_tile(int x, int y);
 
         void draw(sf::RenderWindow &rw);

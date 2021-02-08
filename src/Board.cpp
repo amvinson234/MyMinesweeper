@@ -165,13 +165,32 @@ void Board::update(sf::RenderWindow &rw, sf::Event &event)
             Tile *selected_tile = get_tile(x_pos, y_pos);
             if(selected_tile != NULL)
             {
-                get_tile(x_pos,y_pos)->reveal();
+                selected_tile->reveal();
+                if(selected_tile->bomb_present()) Game::_game_state = Game::Lost;
             }
 
             return;
         }
-
     }
+
+    //check win status
+    if(reveal_count() == N_rows * N_cols - N_bombs)
+    {
+        Game::_game_state = Game::Won;
+        reveal_all();
+    }
+
+
+}
+
+int Board::reveal_count()
+{
+    int reveal_num = 0;
+    for(int i = 0; i < tiles.size(); i++)
+    {
+        if(tiles[i]->reveal_status()) reveal_num++;
+    }
+    return reveal_num;
 }
 
 void Board::reset()

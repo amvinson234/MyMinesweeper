@@ -29,6 +29,7 @@ class ScoreBoard
 
         void update(sf::RenderWindow &rw, Board &game_board, sf::Event &event);
         void draw(sf::RenderWindow &rw);
+        void reset();
 
 
     private:
