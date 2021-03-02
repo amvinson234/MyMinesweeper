@@ -4,6 +4,7 @@
 #include <SFML/Graphics.hpp>
 #include <string>
 #include <map>
+#include "MenuItem.h"
 
 class Game;
 class Board;
@@ -17,15 +18,17 @@ class ScoreBoard
 
         enum action_state{};
 
-        struct Item
+
+        /*struct Item
         {
             public:
                 sf::Text text;
                 int action;
-        };
+        };*/
 
 
-        std::map<std::string,Item> items;
+
+        std::map<std::string,MenuItem> items;
 
         void update(sf::RenderWindow &rw, Board &game_board, sf::Event &event);
         void draw(sf::RenderWindow &rw);
@@ -34,7 +37,7 @@ class ScoreBoard
 
     private:
         sf::Font font;
-        Item create_item(std::string text, int x_pos, int y_pos, int action);
+        MenuItem create_item(std::string text, int x_pos, int y_pos, int action);
 
 };
 

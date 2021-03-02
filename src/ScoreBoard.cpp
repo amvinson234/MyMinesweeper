@@ -8,8 +8,9 @@ ScoreBoard::ScoreBoard()
     font.loadFromFile("FreeMonoBold.otf");
 
     items["bomb count"] = create_item("Bombs Left: ", Game::SCREEN_WIDTH - 300, 100, Game::Playing);
-    items["restart"] = create_item("Restart", Game::SCREEN_WIDTH - 300, 100 + 50, Game::Restarting);
-    items["exit"] = create_item("Exit", Game::SCREEN_WIDTH - 300, 100 + 100, Game::Exiting);
+    items["options"] = create_item("Options", Game::SCREEN_WIDTH - 300, 100 + 50, Game::ShowingOptions);
+    items["restart"] = create_item("Restart", Game::SCREEN_WIDTH - 300, 100 + 100, Game::Restarting);
+    items["exit"] = create_item("Exit", Game::SCREEN_WIDTH - 300, 100 + 150, Game::Exiting);
 
 }
 
@@ -18,8 +19,9 @@ ScoreBoard::ScoreBoard(Board &game_board)
     font.loadFromFile("FreeMonoBold.otf");
 
     items["bomb count"] = create_item("Bombs Left: " + std::to_string(game_board.bombs_left()), Game::SCREEN_WIDTH - 300, 100, Game::Playing);
-    items["restart"] = create_item("Restart", Game::SCREEN_WIDTH - 300, 100 + 50, Game::Restarting);
-    items["exit"] = create_item("Exit", Game::SCREEN_WIDTH - 300, 100 + 100, Game::Exiting);
+    items["options"] = create_item("Options", Game::SCREEN_WIDTH - 300, 100 + 50, Game::ShowingOptions);
+    items["restart"] = create_item("Restart", Game::SCREEN_WIDTH - 300, 100 + 100, Game::Restarting);
+    items["exit"] = create_item("Exit", Game::SCREEN_WIDTH - 300, 100 + 150, Game::Exiting);
 
 }
 
@@ -28,9 +30,9 @@ ScoreBoard::~ScoreBoard()
     //dtor
 }
 
-ScoreBoard::Item ScoreBoard::create_item(std::string text, int x_pos, int y_pos, int action)
+MenuItem ScoreBoard::create_item(std::string text, int x_pos, int y_pos, int action)
 {
-    Item item;
+    MenuItem item;
     item.text = sf::Text(text,font);
     item.text.setPosition(x_pos,y_pos);
     item.action = action;
@@ -40,7 +42,7 @@ ScoreBoard::Item ScoreBoard::create_item(std::string text, int x_pos, int y_pos,
 void ScoreBoard::draw(sf::RenderWindow &rw)
 {
 
-    std::map<std::string,Item>::iterator it;
+    std::map<std::string,MenuItem>::iterator it;
 
     for(it = items.begin(); it != items.end(); it++)
     {
@@ -76,7 +78,7 @@ void ScoreBoard::update(sf::RenderWindow &rw, Board &game_board, sf::Event &even
         int x_pos = sf::Mouse::getPosition(rw).x;
         int y_pos = sf::Mouse::getPosition(rw).y;
 
-        std::map<std::string, Item>::iterator it;
+        std::map<std::string, MenuItem>::iterator it;
         for(it = items.begin(); it != items.end(); it++)
         {
             sf::FloatRect item = it->second.text.getGlobalBounds();

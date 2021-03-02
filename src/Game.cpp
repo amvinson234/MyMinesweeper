@@ -67,6 +67,11 @@ void Game::game_loop(sf::Clock &clock)
                 }
                 else break;
             }
+            /*case Game::ShowingOptions:
+            {
+                _game_state = Game::Playing;
+                break;
+            }*/
             case Game::Restarting:
             {
                 main_window.clear(sf::Color(0,100,200));
@@ -119,6 +124,13 @@ void Game::show_board(sf::Event &event)
     score_board->update(main_window, *game_board, event);
     score_board->draw(main_window);
     main_window.display();
+
+}
+
+void Game::show_options()
+{
+    main_window.clear(sf::Color(0,100,200));
+
 
 }
 
