@@ -1,35 +1,28 @@
-#ifndef SCOREBOARD_H
-#define SCOREBOARD_H
+#ifndef OPTIONSMENU_H
+#define OPTIONSMENU_H
 
 #include <SFML/Graphics.hpp>
 #include <string>
 #include <map>
 #include "MenuItem.h"
 
+
 class Game;
 class Board;
 
-class ScoreBoard
+class OptionsMenu
 {
     public:
-        ScoreBoard();
-        ScoreBoard(Board &game_board);
-        virtual ~ScoreBoard();
-
-        enum action_state{};
-
-
-        std::map<std::string,MenuItem> items;
+        OptionsMenu();
+        virtual ~OptionsMenu();
 
         void update(sf::RenderWindow &rw, Board &game_board, sf::Event &event);
         void draw(sf::RenderWindow &rw);
-        void reset();
-
 
     private:
         sf::Font font;
         MenuItem create_item(std::string text, int x_pos, int y_pos, int action);
-
+        std::map<std::string,MenuItem> items;
 };
 
-#endif // SCOREBOARD_H
+#endif // OPTIONSMENU_H
